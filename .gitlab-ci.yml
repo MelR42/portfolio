@@ -1,10 +1,6 @@
-image: node:14
-
-stages:
-  - deploy
-
 pages:
   stage: deploy
+  image: alpine:latest
   script:
     - mkdir -p public
     - cp index.html public/
