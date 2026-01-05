@@ -1,27 +1,17 @@
 image: node:14
 
 stages:
-  - build
   - deploy
 
-# Job para construir o projeto
-build:
-  stage: build
-  script:
-    - npm install 
-    - echo "Build do projeto concluído!" 
-  artifacts:
-    paths:
-      - dist/ 
-
-# Job para servir o site
-deploy:
+pages:
   stage: deploy
   script:
-    - npm install -g http-server 
-    - http-server . -p 8080 
+    - npm install
+    - npm run build 
+    - mkdir -p public
+    - cp -r dist/* public/ 
+  artifacts:
+    paths:
+      - public
   only:
-    - main 
-  environment:
-    name: production
-    url: http://$CI_PROJECT_NAME.gitlab.io 
+    - main
